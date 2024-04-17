@@ -247,19 +247,26 @@ function createQuestionCard(question){
     //Step 3A: Create the header of the card
     console.log(question);
     //create a header (div element) with class card-header
-
+    let header = document.createElement('div');
+    header.classList.add('card-header');
+    
     //create an title (h5 element) with the class card-title
     //the title should say the question
-
+    let title = document.createElement('h5');
+    title.classList.add('card-title');
+    title.textContent = question.question;
 
     //create a subtitle (p element) with the class card-subtitle
     //the subtitle should say the category of the question
-
+    let subtitle = document.createElement('p');
+    subtitle.classList.add('card-subtitle');
+    subtitle.textContent = question.category;
 
     //append the cardTitle and subtitle to the cardHeader
-
+    header.appendChild(title);
+    header.appendChild(subtitle);
     //append the cardHeader to the questionCard
-
+    questionCard.appendChild(header);
     /*********** HEADER END ************* */
 
     /*********** FORM START ************* */
@@ -327,18 +334,26 @@ function createQuestionCard(question){
  */
 async function getQuestions(){
     console.log("Fetching questions from the API");
-    const baseURL = 'https://opentdb.com/api.php?amount=1';
+    const baseURL = 'https://opentdb.com/api.php?';
     
     //Step 1: get the user input (number of questions to get)
     //get the number of questions to fetch from the user input
+    
+    let numberOfQuestionInput = document.querySelector("#numberOfQuestions");
+    let userInput = numberOfQuestionInput.value;
+    let numberOfQuestionString = `amount=${userInput}`;
+    
 
     //update the totalQuestions variable
 
     //Step 2: get the user input (category)
+    let categorySelect = document.querySelector("#categorySelect");
+    let categoryValues = categorySelect.value;
+    let categoryString = `&category=${categoryValues}`;
 
 
     //build the full URL
-    const fullURL = `${baseURL}`;
+    const fullURL = `${baseURL}${numberOfQuestionString}${categoryString}`;
     console.log("Full URL: ", fullURL);
     //make the fetch request
     const response = await fetch(fullURL);
